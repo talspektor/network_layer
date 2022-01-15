@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:dio/dio.dart';
+import 'package:network_layer/network_decodable.dart';
 
 import 'enumeration.dart';
 
@@ -21,7 +22,7 @@ class HttpMethod extends Enum<String> {
   static const patch = HttpMethod('PATCH');
 }
 
-abstract class HttpRequest {
+abstract class HttpRequest implements RequestDecodable {
   RequestOptions get request => RequestOptions(
         baseUrl: baseUrl,
         method: method,

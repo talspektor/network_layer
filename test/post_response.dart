@@ -1,10 +1,10 @@
-import 'package:network_layer/network_mappers.dart';
+import 'package:network_layer/network_decodable.dart';
 
-class PostList extends ListMapable {
+class PostList extends ListDicodable {
   late final List<PostResponse> posts;
 
   @override
-  Mapable fromJsonList(List json) {
+  Decodable fromJsonList(List json) {
     posts = json.map((e) => PostResponse.fromJson(e)).toList();
     return this;
   }

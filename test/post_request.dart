@@ -1,7 +1,6 @@
 import 'package:network_layer/http_request.dart';
-import 'package:network_layer/network_mappers.dart';
 
-class PostRequest extends HttpRequest implements RequestMapable {
+class PostRequest extends HttpRequest {
   final String userId;
 
   PostRequest(this.userId);
