@@ -17,7 +17,7 @@ void main() {
       final response = await session.request<PostList>(
           httpRequest: postRequest, responseType: postList);
 
-      print(response.posts.toString());
+      print(response.list.toString());
     } catch (e) {
       print(e);
     }

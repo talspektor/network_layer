@@ -1,11 +1,12 @@
 import 'package:network_layer/network_decodable.dart';
 
-class PostList extends ListDicodable {
-  late final List<PostResponse> posts;
+class PostList implements ListDicodable<PostResponse> {
+  @override
+  late final List<PostResponse> list;
 
   @override
   Decodable fromJsonList(List json) {
-    posts = json.map((e) => PostResponse.fromJson(e)).toList();
+    list = json.map((e) => PostResponse.fromJson(e)).toList();
     return this;
   }
 }

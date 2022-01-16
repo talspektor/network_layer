@@ -1,6 +1,6 @@
 import 'network_decodable.dart';
 
-class ErrorResponse implements Errordecodable {
+class ErrorResponse implements ErrorDecodable {
   @override
   String? description;
 
