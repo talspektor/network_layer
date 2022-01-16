@@ -29,6 +29,7 @@ class HttpSession extends Session {
       response = await _client.request(
           '${httpRequest.baseUrl}${httpRequest.path}',
           queryParameters: httpRequest.queryParameters,
+          data: httpRequest.body,
           options: httpRequest.options);
       return Decodable(responseType, response.data) as T;
     } catch (e) {
