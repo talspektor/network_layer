@@ -5,8 +5,8 @@ import 'error_response.dart';
 import 'network_decodable.dart';
 
 abstract class HttpSessionProtocol {
-  Future<T> request<T extends Decodable>(
-      {required HttpRequest httpRequest, required Decodable responseType});
+  Future<T> request<T extends DecodeAble>(
+      {required HttpRequest httpRequest, required DecodeAble responseType});
 }
 
 abstract class Session implements HttpSessionProtocol {
@@ -21,9 +21,9 @@ class HttpSession extends Session {
   HttpSession(this._client) : super(_client);
 
   @override
-  Future<T> request<T extends Decodable>(
+  Future<T> request<T extends DecodeAble>(
       {required HttpRequest httpRequest,
-      required Decodable responseType}) async {
+      required DecodeAble responseType}) async {
     Response response;
     try {
       response = await _client.request(
@@ -31,7 +31,7 @@ class HttpSession extends Session {
           queryParameters: httpRequest.queryParameters,
           data: httpRequest.body,
           options: httpRequest.options);
-      return Decodable(responseType, response.data) as T;
+      return DecodeAble(responseType, response.data) as T;
     } catch (e) {
       if (e is DioError) {
         final Map<String, dynamic> responseError = {

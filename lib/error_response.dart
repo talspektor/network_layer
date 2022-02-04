@@ -1,6 +1,6 @@
 import 'network_decodable.dart';
 
-class ErrorResponse implements ErrorDecodable {
+class ErrorResponse implements ErrorDecodeAble {
   @override
   String? description;
 
@@ -8,7 +8,7 @@ class ErrorResponse implements ErrorDecodable {
   String? errorCode;
 
   @override
-  Decodable fromJson(Map<String, dynamic> json) {
+  DecodeAble fromJson(Map<String, dynamic> json) {
     errorCode = json['error_code'];
     description = json['description'];
 
