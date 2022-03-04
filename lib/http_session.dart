@@ -32,18 +32,15 @@ class HttpSession extends Session {
           '${httpRequest.baseUrl}${httpRequest.path}',
           queryParameters: httpRequest.queryParameters,
           options: httpRequest.options);
-      return decode(responseType,
-          response.data); // DecodeAble(responseType, response.data) as T;
-    } catch (e) {
-      if (e is DioError) {
-        final Map<String, dynamic> responseError = {
-          'error_code': '${e.response?.statusCode}',
-          'description': e.message
-        };
-        throw ErrorResponse().fromJson(responseError);
-      } else {
-        rethrow;
-      }
+      return decode(responseType, response.data);
+    } on DioError catch (e) {
+      final Map<String, dynamic> responseError = {
+        'error_code': '${e.response?.statusCode}',
+        'description': e.message
+      };
+      return Result.failure(ErrorResponse().fromJson(responseError) as Failure);
+    } on FormatFailure catch (e) {
+      return Result.failure(e);
     }
   }
 }

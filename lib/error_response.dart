@@ -1,6 +1,8 @@
+import 'package:network_layer/failure.dart';
+
 import 'network_decodable.dart';
 
-class ErrorResponse implements ErrorDecodeAble {
+class ErrorResponse implements ErrorDecodeAble, Failure {
   @override
   String? description;
 
@@ -14,4 +16,7 @@ class ErrorResponse implements ErrorDecodeAble {
 
     return this;
   }
+
+  @override
+  String get message => description ?? '';
 }
