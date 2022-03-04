@@ -14,22 +14,38 @@ class PostList extends ListDecodeAble<PostResponse> {
   List<PostResponse> get list => _list;
 }
 
-class PostResponse {
-  final int userId;
-  final int id;
-  final String title;
-  final String body;
+class PostResponse implements BaseDecodeAble {
+  final int? userId;
+  final int? id;
+  final String? title;
+  final String? body;
 
-  PostResponse(
+  PostResponse.empty()
+      : userId = null,
+        id = null,
+        title = null,
+        body = null;
+
+  PostResponse._(
       {required this.userId,
       required this.id,
       required this.title,
       required this.body});
 
-  factory PostResponse.fromJson(Map<String, dynamic> json) => PostResponse(
-        userId: json['userId'],
-        id: json['id'],
-        title: json['title'],
-        body: json['body'],
-      );
+  factory PostResponse.fromJson(Map<String, dynamic> json) {
+    if (json.isEmpty) {
+      throw const FormatException('Empty Json');
+    }
+    return PostResponse._(
+      userId: json['userId'],
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+    );
+  }
+
+  @override
+  DecodeAble fromJson(Map<String, dynamic> json) {
+    return PostResponse.fromJson(json);
+  }
 }

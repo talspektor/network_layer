@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:network_layer/failure.dart';
 import 'package:network_layer/http_session.dart';
 import 'package:network_layer/result.dart';
 
@@ -13,18 +14,20 @@ void main() {
     final session = HttpSession(Dio());
 
     final postList = PostList.empty();
+    final post = PostResponse.empty();
 
     try {
       final response = await session.request<PostList>(
           httpRequest: postRequest, responseType: postList);
       switch (response.resultEnum) {
         case ResultEnum.success:
-          final posts = response.success!.list;
-          print(posts);
+          final PostList posts = response.resultEnum.value<PostList>(response);
+          // final posts = response.success!.list;
+          print(posts.list);
           break;
         case ResultEnum.failure:
-          final message = response.failure!.message;
-          print(message);
+          final Failure failure = response.resultEnum.value<PostList>(response);
+          print(failure.message);
           break;
       }
     } catch (e) {
