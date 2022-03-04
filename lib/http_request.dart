@@ -22,7 +22,7 @@ class HttpMethod extends Enum<String> {
   static const patch = HttpMethod('PATCH');
 }
 
-abstract class HttpRequest implements RequestDecodable {
+abstract class HttpRequest implements RequestDecodeAble {
   RequestOptions get request => RequestOptions(
         baseUrl: baseUrl,
         method: method,

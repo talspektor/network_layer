@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:network_layer/decode.dart';
+import 'package:network_layer/failure.dart';
 import 'package:network_layer/http_request.dart';
 
 import 'error_response.dart';
 import 'network_decodable.dart';
+import 'result.dart';
 
 abstract class HttpSessionProtocol {
-  Future<T> request<T extends Decodable>(
-      {required HttpRequest httpRequest, required Decodable responseType});
+  Future<Result<DecodeAble, Failure>> request<T extends DecodeAble>(
+      {required HttpRequest httpRequest, required T responseType});
 }
 
 abstract class Session implements HttpSessionProtocol {
@@ -21,16 +24,16 @@ class HttpSession extends Session {
   HttpSession(this._client) : super(_client);
 
   @override
-  Future<T> request<T extends Decodable>(
-      {required HttpRequest httpRequest,
-      required Decodable responseType}) async {
+  Future<Result<T, Failure>> request<T extends DecodeAble>(
+      {required HttpRequest httpRequest, required T responseType}) async {
     Response response;
     try {
       response = await _client.request(
           '${httpRequest.baseUrl}${httpRequest.path}',
           queryParameters: httpRequest.queryParameters,
           options: httpRequest.options);
-      return Decodable(responseType, response.data) as T;
+      return decode(responseType,
+          response.data); // DecodeAble(responseType, response.data) as T;
     } catch (e) {
       if (e is DioError) {
         final Map<String, dynamic> responseError = {
